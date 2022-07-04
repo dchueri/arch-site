@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider/useAuth";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
+import { Input } from "@mui/material";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
   const history = useNavigate();
-  
+
   async function onFinish(values: { email: string; password: string }) {
-    values.email = email
-    values.password = password
-    console.log(values)
+    values.email = email;
+    values.password = password;
+    console.log(values);
     try {
       await auth.authenticate(values.email, values.password);
       history("/me");
@@ -28,24 +30,30 @@ export function LoginForm() {
           <Form className="login-form" onFinish={onFinish}>
             <h1>Bem vindo!</h1>
             <Form.Item name="email" className="login-form-input">
-              <Input
+              <input
                 type="email"
                 className={email !== "" ? "has-val input" : "input"}
-                onChange={(e) => {setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               <span className="focus-input" data-placeholder="E-mail" />
             </Form.Item>
             <Form.Item name="password" className="login-form-input">
-              <Input
+              <input
                 type="password"
                 className={password !== "" ? "has-val input" : "input"}
-                onChange={(e) => {setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
               <span className="focus-input" data-placeholder="Senha" />
             </Form.Item>
 
             <div className="container-login-form-btn">
-              <Button htmlType="submit" className="login-form-btn">Login</Button>
+              <Button type='primary' htmlType="submit" className="login-form-btn">
+                Login
+              </Button>
             </div>
           </Form>
         </div>
