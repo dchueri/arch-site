@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setUserLocalStorage(payload);
   }
 
-  function logout() {
+  function logout(): void {
     setUser(null);
     setUserLocalStorage(null);
   }

@@ -4,6 +4,7 @@ import { Button, Form, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Input } from "@mui/material";
+import styled from "styled-components";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -11,13 +12,17 @@ export function LoginForm() {
   const auth = useAuth();
   const history = useNavigate();
 
+  const ButtonStyle = styled(Button)`
+    font-weight: 500;
+  `
+
   async function onFinish(values: { email: string; password: string }) {
     values.email = email;
     values.password = password;
     console.log(values);
     try {
       await auth.authenticate(values.email, values.password);
-      history("/me");
+      history("/usersList");
     } catch (e) {
       message.error("E-mail ou senha inválidos");
     }
@@ -51,9 +56,9 @@ export function LoginForm() {
             </Form.Item>
 
             <div className="container-login-form-btn">
-              <Button type='primary' htmlType="submit" className="login-form-btn">
+              <ButtonStyle type='primary' htmlType="submit" className="login-form-btn">
                 Login
-              </Button>
+              </ButtonStyle>
             </div>
           </Form>
         </div>

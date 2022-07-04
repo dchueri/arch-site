@@ -8,27 +8,32 @@ import { ProtectedLayout } from "./components/ProtectedLayout";
 import { AuthProvider } from "./context/AuthProvider";
 import { useAuth } from "./context/AuthProvider/useAuth";
 import { getUserLocalStorage } from "./context/AuthProvider/util";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
+import { UsersList } from "./components/UsersList";
 
 function App() {
   const auth = useAuth();
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="login" element={<LoginForm />} />
-          <Route
-            path="me"
-            element={
-              <ProtectedLayout>
-                <NavBar/>
-              </ProtectedLayout>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <>
+          <BrowserRouter>
+            <Routes>
+              <Route path="login" element={<LoginForm />} />
+              <Route
+                path="usersList"
+                element={
+                  <ProtectedLayout>
+                    <UsersList />
+                  </ProtectedLayout>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </>
+      </AuthProvider>
+    </>
   );
 }
 
