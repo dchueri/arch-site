@@ -8,32 +8,45 @@ import { ProtectedLayout } from "./components/ProtectedLayout";
 import { AuthProvider } from "./context/AuthProvider";
 import { useAuth } from "./context/AuthProvider/useAuth";
 import { getUserLocalStorage } from "./context/AuthProvider/util";
-import "antd/dist/antd.css";
+
 import { UsersList } from "./components/UsersList";
+import r from "./context/routes.json";
+import RegisterUser from "./components/RegisterUser";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeConsumer } from "styled-components";
 
 function App() {
   const auth = useAuth();
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
   return (
-    <>
       <AuthProvider>
-        <>
-          <BrowserRouter>
-            <Routes>
-              <Route path="login" element={<LoginForm />} />
-              <Route
-                path="usersList"
-                element={
-                  <ProtectedLayout>
-                    <UsersList />
-                  </ProtectedLayout>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </>
+        <BrowserRouter>
+          <Routes>
+            <Route path={r.login} element={<LoginForm />} />
+            <Route
+              path={r.usersList}
+              element={
+                <ProtectedLayout>
+                  <UsersList />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path={r.registerUser}
+              element={
+                <ProtectedLayout>
+                  <RegisterUser />
+                </ProtectedLayout>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </AuthProvider>
-    </>
   );
 }
 

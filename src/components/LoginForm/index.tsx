@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Input } from "@mui/material";
 import styled from "styled-components";
+import 'antd/dist/antd.css';
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ export function LoginForm() {
     console.log(values);
     try {
       await auth.authenticate(values.email, values.password);
-      history("/usersList");
+      history("/users");
     } catch (e) {
       message.error("E-mail ou senha inválidos");
     }
@@ -32,8 +33,8 @@ export function LoginForm() {
     <div className="container">
       <div className="container-login">
         <div className="login-area">
+        <h1>Bem vindo!</h1>
           <Form className="login-form" onFinish={onFinish}>
-            <h1>Bem vindo!</h1>
             <Form.Item name="email" className="login-form-input">
               <input
                 type="email"
