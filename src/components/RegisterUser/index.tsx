@@ -10,16 +10,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavBar } from '../NavBar';
+import UserService from './services';
 
 export default function RegisterUser() {
   const theme = createTheme();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const name =  data.get('name')?.toString() || '';
+    const password = data.get('password')?.toString() || '';
+    const email = data.get('email')?.toString() || '';
+    const userService = UserService;
+    console.log(name + '  ' + email + '  ' + password)
+    userService.createUser(name, email, password);
+    console.log(data)
   };
 
   return (
@@ -43,25 +47,15 @@ export default function RegisterUser() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
+                  id="name"
                   label="Nome"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Sobrenome"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>

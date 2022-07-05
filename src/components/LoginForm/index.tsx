@@ -20,7 +20,6 @@ export function LoginForm() {
   async function onFinish(values: { email: string; password: string }) {
     values.email = email;
     values.password = password;
-    console.log(values);
     try {
       await auth.authenticate(values.email, values.password);
       history("/users");
