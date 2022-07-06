@@ -14,39 +14,48 @@ import r from "./context/routes.json";
 import RegisterUser from "./components/RegisterUser";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { ThemeConsumer } from "styled-components";
+import EditUser from "./components/EditUser";
 
 function App() {
   const auth = useAuth();
   const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: "dark",
     },
   });
 
   return (
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path={r.login} element={<LoginForm />} />
-            <Route
-              path={r.usersList}
-              element={
-                <ProtectedLayout>
-                  <UsersList />
-                </ProtectedLayout>
-              }
-            />
-            <Route
-              path={r.registerUser}
-              element={
-                <ProtectedLayout>
-                  <RegisterUser />
-                </ProtectedLayout>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={r.login} element={<LoginForm />} />
+          <Route
+            path={r.usersList}
+            element={
+              <ProtectedLayout>
+                <UsersList />
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path={r.registerUser}
+            element={
+              <ProtectedLayout>
+                <RegisterUser />
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path={r.editUser + ':userId'}
+            element={
+              <ProtectedLayout>
+                <EditUser />
+              </ProtectedLayout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -10,7 +10,11 @@ import Paper from "@mui/material/Paper";
 import { IUserEntity, UserProps } from "../../context/AuthProvider/types";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Stack } from "@mui/material";
+import { Button, Link, Stack } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import r from "../../context/routes.json";
+import { Api } from "../../services/api";
+import { getUserLocalStorage } from "../../context/AuthProvider/util";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,7 +45,7 @@ export default function UsersTable() {
   const [users, setUsers] = useState<IUserEntity[]>([]);
 
   useEffect(() => {
-    axios.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
+    Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
       setUsers(res.data);
     });
   }, []);
@@ -55,6 +59,7 @@ export default function UsersTable() {
               <StyledTableCell>Nome</StyledTableCell>
               <StyledTableCell>E-mail</StyledTableCell>
               <StyledTableCell>Cargo</StyledTableCell>
+              <StyledTableCell></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -65,6 +70,11 @@ export default function UsersTable() {
                 </StyledTableCell>
                 <StyledTableCell>{user.email}</StyledTableCell>
                 <StyledTableCell>{user.role}</StyledTableCell>
+                <StyledTableCell>
+                  <Link href={r.editUser + user.id}>
+                    <ModeEditIcon />
+                  </Link>
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

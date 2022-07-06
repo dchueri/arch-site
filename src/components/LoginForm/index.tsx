@@ -41,6 +41,7 @@ export function LoginForm() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                required
               />
               <span className="focus-input" data-placeholder="E-mail" />
             </Form.Item>
@@ -51,6 +52,7 @@ export function LoginForm() {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                required
               />
               <span className="focus-input" data-placeholder="Senha" />
             </Form.Item>
