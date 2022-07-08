@@ -14,46 +14,95 @@ import UserService from "./services";
 import Validations from "../../validations/Validations";
 import { message } from "antd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useEffect, useState } from "react";
-import { IUserEntity } from "../../context/AuthProvider/types";
-import { useParams } from "react-router-dom";
+import { FocusEventHandler, useEffect, useState } from "react";
+import { IUserEditEntity, IUserEntity } from "../../context/AuthProvider/types";
+import { useNavigate, useParams } from "react-router-dom";
 import { Divider, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import * as yup from 'yup';
 
 export default function EditUser() {
   const [user, setUser] = useState<IUserEntity>();
-  const [age, setAge] = useState('');
+  const [role, setRole] = useState("");
   const theme = createTheme();
   const params = useParams();
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const count = 0;
+  const history = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const newUser = await UserService.findOne(params.userId || "");
+      setUser(newUser);
+      setRole(newUser.role);
+    };
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = data.get("name")?.toString() || "";
     const password = data.get("password")?.toString() || "";
+    const passwordConfirmation =
+      data.get("passwordConfirmation")?.toString() || "";
     const email = data.get("email")?.toString() || "";
-    console.log(`name: ${name}, email: ${email}, password: ${password}`);
+    const role = data.get("role")?.toString() || "";
+    const infoUser = {
+      id: params.userId || "",
+      name: name,
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      role: role,
+    };
+    if (infoUser.password === infoUser.passwordConfirmation) {
+      if (Validations.verifyPasswordLength(password) || password.length == 0) {
+        if (Validations.verifyNameLength(name)) {
+          if (Validations.verifyIfIsEmail(email)) {
+            if (infoUser.password.length > 0) {
+              await UserService.editUser(
+                infoUser.id,
+                infoUser.name,
+                infoUser.email,
+                infoUser.role,
+                infoUser.password
+              ).then(message.success("Usuário atualizado com sucesso."));
+            } else {
+              await UserService.editUser(
+                infoUser.id,
+                infoUser.name,
+                infoUser.email,
+                infoUser.role
+              ).then(message.success("Usuário atualizado com sucesso."));
+            }
+          } else {
+            return message.error("E-mail inválido.");
+          }
+        } else {
+          return message.error("Nome inválido.");
+        }
+      } else {
+        message.error("A senha deve possuir no mínimo 6 caracteres.");
+      }
+    } else {
+      message.error("As senhas devem ser iguais.");
+    }
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setRole(event.target.value);
   };
 
-  //------CHECKP-----------
-/*   const schema = Yup.object().shape({
-    name: Yup.string().notRequired().min(3, "O nome deve ter mais de 3 letras"),
-    email: Yup.string().email().notRequired(),
-    oldPassword: Yup.string().notRequired(),
-    password: Yup.string().notRequired().min(6, "A senha deve ter pelo menos 6 caracteres"),
-    confirmPassword: Yup.string().
-        onOf([Yup.ref('password'), null],'Passwords must match')
-  }) */
+  const handleUser = (event: any) => {
+    if (event.target.value != null) {
+      setUser(event.target.value);
+    }
+  };
 
-  useEffect(() => {
-    UserService.findOne(params.userId || "").then((res) => {
-      setUser(res);
+  const handleDeleteUser = async () => {
+    await UserService.deleteUser(user?.id || '').then(() => {
+      history("/users");
+      message.success("Usuário excluído com sucesso.");
     });
-  }, []);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,25 +132,26 @@ export default function EditUser() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
                   name="name"
                   fullWidth
                   id="name"
                   label="Nome"
                   value={user?.name}
-                  focused={true}
+                  onChange={handleUser}
+                  focused
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Select
                   fullWidth
-                  id="cargo"
-                  value={age}
+                  id="role"
+                  name="role"
+                  value={role}
                   label="Cargo"
                   onChange={handleChange}
                 >
-                  <MenuItem value={1}>Administrador</MenuItem>
-                  <MenuItem value={2}>Projetista</MenuItem>
+                  <MenuItem value="GUEST">Administrador</MenuItem>
+                  <MenuItem value="EMPLOYER">Projetista</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={12}>
@@ -112,7 +162,8 @@ export default function EditUser() {
                   name="email"
                   autoComplete="email"
                   value={user?.email}
-                  focused={true}
+                  onChange={handleUser}
+                  focused
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,11 +179,11 @@ export default function EditUser() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="password"
+                  name="passwordConfirmation"
                   label="Repita a nova senha"
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  id="passwordConfirmation"
+                  autoComplete="password-confirmation"
                 />
               </Grid>
             </Grid>
@@ -146,7 +197,8 @@ export default function EditUser() {
                 Atualizar
               </Button>
               <Button
-                type="submit"
+                type="button"
+                onClick={handleDeleteUser}
                 variant="contained"
                 color="error"
                 sx={{ mt: 3, mb: 2 }}

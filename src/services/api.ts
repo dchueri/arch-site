@@ -18,5 +18,5 @@ Api.interceptors.request.use(
   }
 )
 
-const user = getUserLocalStorage()
+const user = getUserLocalStorage() || ''
 Api.defaults.headers.common['Authorization'] = 'Bearer ' + user.token

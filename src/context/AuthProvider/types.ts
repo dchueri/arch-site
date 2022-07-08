@@ -11,6 +11,15 @@ export interface IUserEntity {
     role: string;
 }
 
+export interface IUserEditEntity {
+    id: string;
+    email: string;
+    name: string;
+    password: string;
+    passwordConfirmation: string,
+    role: string;
+}
+
 export interface IContext extends IUser {
     authenticate: (email: string, password: string) => Promise<void>;
     logout: () => void;

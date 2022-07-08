@@ -5,25 +5,28 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import { Input } from "@mui/material";
 import styled from "styled-components";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
+import { getUserLocalStorage } from "../../context/AuthProvider/util";
+import r from '../../context/routes.json'
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
-  const history = useNavigate();
+  const history = useNavigate()
 
   const ButtonStyle = styled(Button)`
     font-weight: 500;
-  `
+  `;
 
   async function onFinish(values: { email: string; password: string }) {
     values.email = email;
     values.password = password;
     try {
       await auth.authenticate(values.email, values.password);
-      history("/users");
+      history(r.usersList);
     } catch (e) {
+      console.log(e)
       message.error("E-mail ou senha inválidos");
     }
   }
@@ -32,7 +35,7 @@ export function LoginForm() {
     <div className="container">
       <div className="container-login">
         <div className="login-area">
-        <h1>Bem vindo!</h1>
+          <h1>Bem vindo!</h1>
           <Form className="login-form" onFinish={onFinish}>
             <Form.Item name="email" className="login-form-input">
               <input
@@ -58,7 +61,11 @@ export function LoginForm() {
             </Form.Item>
 
             <div className="container-login-form-btn">
-              <ButtonStyle type='primary' htmlType="submit" className="login-form-btn">
+              <ButtonStyle
+                type="primary"
+                htmlType="submit"
+                className="login-form-btn"
+              >
                 Login
               </ButtonStyle>
             </div>
