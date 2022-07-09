@@ -22,6 +22,7 @@ import { Divider, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 export default function EditUser() {
   const [user, setUser] = useState<IUserEntity>();
   const [role, setRole] = useState("");
+  const [mail, setMail] = useState('');
   const theme = createTheme();
   const params = useParams();
   const count = 0;
@@ -32,6 +33,7 @@ export default function EditUser() {
       const newUser = await UserService.findOne(params.userId || "");
       setUser(newUser);
       setRole(newUser.role);
+      setMail(newUser.email);
     };
     fetchData();
   }, []);
@@ -57,21 +59,45 @@ export default function EditUser() {
       if (Validations.verifyPasswordLength(password) || password.length == 0) {
         if (Validations.verifyNameLength(name)) {
           if (Validations.verifyIfIsEmail(email)) {
-            if (infoUser.password.length > 0) {
-              await UserService.editUser(
-                infoUser.id,
-                infoUser.name,
-                infoUser.email,
-                infoUser.role,
-                infoUser.password
-              ).then(message.success("Usuário atualizado com sucesso."));
+            if (email == mail) {
+              console.log(mail)
+              if (infoUser.password.length > 0) {
+                await UserService.editUser(
+                  infoUser.id,
+                  infoUser.name,
+                  infoUser.email,
+                  infoUser.role,
+                  infoUser.password
+                ).then(message.success("Usuário atualizado com sucesso."));
+              } else {
+                await UserService.editUser(
+                  infoUser.id,
+                  infoUser.name,
+                  infoUser.email,
+                  infoUser.role
+                ).then(message.success("Usuário atualizado com sucesso."));
+              }
             } else {
-              await UserService.editUser(
-                infoUser.id,
-                infoUser.name,
-                infoUser.email,
-                infoUser.role
-              ).then(message.success("Usuário atualizado com sucesso."));
+              if (await Validations.verifyIfEmailExists(email)) {
+                if (infoUser.password.length > 0) {
+                  await UserService.editUser(
+                    infoUser.id,
+                    infoUser.name,
+                    infoUser.email,
+                    infoUser.role,
+                    infoUser.password
+                  ).then(message.success("Usuário atualizado com sucesso."));
+                } else {
+                  await UserService.editUser(
+                    infoUser.id,
+                    infoUser.name,
+                    infoUser.email,
+                    infoUser.role
+                  ).then(message.success("Usuário atualizado com sucesso."));
+                }
+              } else {
+                return message.error("E-mail já cadastrado.");
+              }
             }
           } else {
             return message.error("E-mail inválido.");
@@ -98,7 +124,7 @@ export default function EditUser() {
   };
 
   const handleDeleteUser = async () => {
-    await UserService.deleteUser(user?.id || '').then(() => {
+    await UserService.deleteUser(user?.id || "").then(() => {
       history("/users");
       message.success("Usuário excluído com sucesso.");
     });

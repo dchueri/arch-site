@@ -6,7 +6,6 @@ import { Api } from "../../services/api";
 export default class UserService {
   static async createUser(name: string, email: string, password: string) {
     const user = { name: name, email: email, password: password };
-    console.log(JSON.stringify(user));
     await Api
       .post("https://dcode-arch-app.herokuapp.com/user", user)
       .then((res) => console.log(res)).catch((res) => message.error(res.response.data.message));

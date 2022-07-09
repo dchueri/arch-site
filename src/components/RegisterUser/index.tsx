@@ -13,10 +13,13 @@ import { NavBar } from "../NavBar";
 import UserService from "./services";
 import Validations from "../../validations/Validations";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterUser() {
   const theme = createTheme();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const history = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = data.get("name")?.toString() || "";
@@ -25,15 +28,19 @@ export default function RegisterUser() {
     if (Validations.verifyPasswordLength(password)) {
       if (Validations.verifyNameLength(name)) {
         if (Validations.verifyIfIsEmail(email)) {
-          UserService.createUser(name, email, password);
+          if (await Validations.verifyIfEmailExists(email)) {
+            UserService.createUser(name, email, password).then(() => history('/users'));
+          } else {
+            return message.error("E-mail já cadastrado.");
+          }
         } else {
-          return message.error('E-mail inválido.')
+          return message.error("E-mail inválido.");
         }
       } else {
-        return message.error('Nome inválido.')
+        return message.error("Nome inválido.");
       }
     } else {
-      message.error('A senha deve possuir no mínimo 6 caracteres.')
+      message.error("A senha deve possuir no mínimo 6 caracteres.");
     }
   };
 
