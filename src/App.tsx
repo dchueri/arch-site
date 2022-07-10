@@ -15,6 +15,7 @@ import RegisterUser from "./components/RegisterUser";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { ThemeConsumer } from "styled-components";
 import EditUser from "./components/EditUser";
+import { ProjectsList } from "./components/ProjectsList";
 
 function App() {
   const auth = useAuth();
@@ -46,10 +47,18 @@ function App() {
             }
           />
           <Route
-            path={r.editUser + ':userId'}
+            path={r.editUser + ":userId"}
             element={
               <ProtectedLayout>
                 <EditUser />
+              </ProtectedLayout>
+            }
+          />
+          <Route
+            path={r.projectsList}
+            element={
+              <ProtectedLayout>
+                <ProjectsList />
               </ProtectedLayout>
             }
           />

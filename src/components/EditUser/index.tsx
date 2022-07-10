@@ -25,7 +25,6 @@ export default function EditUser() {
   const [mail, setMail] = useState('');
   const theme = createTheme();
   const params = useParams();
-  const count = 0;
   const history = useNavigate();
 
   useEffect(() => {

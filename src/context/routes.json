@@ -3,5 +3,7 @@
     "usersList": "/users",
     "registerUser": "/users/register-user",
     "projects": "/projects",
-    "editUser": "/users/edit/"
+    "editUser": "/users/edit/",
+    "projectsList": "/projects",
+    "editProject": "/projects/edit"
 }
