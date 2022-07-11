@@ -1,9 +1,5 @@
 import { message } from "antd";
-import { convertLegacyProps } from "antd/lib/button/button";
-import axios from "axios";
-import { IUserEntity } from "../../context/AuthProvider/types";
 import { Api } from "../../services/api";
-import r from "../../context/routes.json";
 
 export default class UserService {
   static async editUser(
@@ -13,11 +9,17 @@ export default class UserService {
     role: string,
     password?: string
   ) {
-    let user = {}
+    let user = {};
     if (password) {
-      user = { id: id, name: name, email: email, role: role, password: password };
+      user = {
+        id: id,
+        name: name,
+        email: email,
+        role: role,
+        password: password,
+      };
     } else {
-      user = { id: id, name: name, email: email, role: role};
+      user = { id: id, name: name, email: email, role: role };
     }
     await Api.put("https://dcode-arch-app.herokuapp.com/user", user)
       .then()
@@ -30,6 +32,17 @@ export default class UserService {
     ).then((res) => {
       return res.data;
     });
+  }
+
+  static async findAll() {
+    return await Api.get("https://dcode-arch-app.herokuapp.com/user")
+  }
+
+  static async createUser(name: string, email: string, password: string) {
+    const user = { name: name, email: email, password: password };
+    await Api.post("https://dcode-arch-app.herokuapp.com/user", user)
+      .then((res) => console.log(res))
+      .catch((res) => message.error(res.response.data.message));
   }
 
   static async deleteUser(userId: string) {

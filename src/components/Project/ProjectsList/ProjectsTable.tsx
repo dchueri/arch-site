@@ -1,4 +1,6 @@
-import * as React from "react";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Link } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,17 +8,13 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { IProjectEntity } from "../../context/ProjectProvider/types";
+import "moment";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, Link, Stack } from "@mui/material";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import r from "../../context/routes.json";
-import { Api } from "../../services/api";
-import { getUserLocalStorage } from "../../context/AuthProvider/util";
-import { IUserEntity } from "../../context/AuthProvider/types";
-import UserService from "../EditUser/services";
+import { IUserEntity } from "../../../context/AuthProvider/types";
+import { IProjectEntity } from "../../../context/ProjectProvider/types";
+import routesList from "../../../routes/routesList.json";
+import { Api } from "../../../services/api";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -56,12 +54,25 @@ export default function ProjectsTable() {
     });
   }, []);
 
-  const catchName= (id: string) => {
-    return users.map(u => {
-        if(u.id === id) {
-            return u.name
-        }
-    })
+  const catchName = (id: string) => {
+    return users.map((u) => {
+      if (u.id === id) {
+        return u.name;
+      }
+    });
+  };
+
+  const handleDate = (dateString: string) => {
+    const date = moment(dateString, moment.ISO_8601, true).utc();
+    return date.format("DD/MM/YYYY");
+  };
+
+  const handleFormatPrice = (price: number) => {
+    const formated = price.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formated;
   };
 
   return (
@@ -86,14 +97,20 @@ export default function ProjectsTable() {
                   {projects.clientName}
                 </StyledTableCell>
                 <StyledTableCell>{projects.description}</StyledTableCell>
-                <StyledTableCell>{catchName(projects.idOfResponsible)}</StyledTableCell>
-                <StyledTableCell>{projects.firstDeliveryDate}</StyledTableCell>
-                <StyledTableCell>{projects.price}</StyledTableCell>
+                <StyledTableCell>
+                  {catchName(projects.idOfResponsible)}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {handleDate(projects.firstDeliveryDate)}
+                </StyledTableCell>
+                <StyledTableCell>
+                  {handleFormatPrice(projects.price)}
+                </StyledTableCell>
                 <StyledTableCell>
                   {projects.numberOfInstallments}
                 </StyledTableCell>
                 <StyledTableCell>
-                  <Link href={r.editProject + projects.id}>
+                  <Link href={routesList.editProject + projects.id}>
                     <ModeEditIcon />
                   </Link>
                 </StyledTableCell>

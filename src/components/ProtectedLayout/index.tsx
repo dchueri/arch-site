@@ -1,12 +1,9 @@
-import { Title, TitleOutlined } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import { margin } from "@mui/system";
 import { Button } from "antd";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthProvider/useAuth";
-import r from "../../context/routes.json";
+import routesList from "../../routes/routesList.json";
 
 export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
   const Container = styled.div`
@@ -21,13 +18,13 @@ export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
   if (!auth.email) {
     return (
       <Container>
-        <body style={{height: 'fit-content'}}>
+        <div style={{height: 'fit-content', width: '100vw'}}>
           <h1>Não autorizado</h1>
           <Typography>
             Você precisa fazer o login para acessar essa página.
           </Typography>
-          <Button style={{margin: '1em'}} href={r.login}>Fazer login</Button>
-        </body>
+          <Button style={{margin: '1em'}} href={routesList.login}>Fazer login</Button>
+        </div>
       </Container>
     );
   } else {

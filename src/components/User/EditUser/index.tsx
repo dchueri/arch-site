@@ -1,35 +1,34 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { NavBar } from "../NavBar";
-import UserService from "./services";
-import Validations from "../../validations/Validations";
-import { message } from "antd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { FocusEventHandler, useEffect, useState } from "react";
-import { IUserEditEntity, IUserEntity } from "../../context/AuthProvider/types";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Divider, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { IUserEntity } from "../../../context/AuthProvider/types";
+import { NavBar } from "../../NavBar";
+import UserHandles from "../handles";
+import UserService from "../services";
 
 export default function EditUser() {
   const [user, setUser] = useState<IUserEntity>();
   const [role, setRole] = useState("");
-  const [mail, setMail] = useState('');
+  const [mail, setMail] = useState("");
   const theme = createTheme();
   const params = useParams();
   const history = useNavigate();
+  const userHandles = new UserHandles();
 
   useEffect(() => {
     const fetchData = async () => {
-      const newUser = await UserService.findOne(params.userId || "");
+      const newUser = await UserService.findOne(params.userId!);
       setUser(newUser);
       setRole(newUser.role);
       setMail(newUser.email);
@@ -40,76 +39,15 @@ export default function EditUser() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const name = data.get("name")?.toString() || "";
-    const password = data.get("password")?.toString() || "";
-    const passwordConfirmation =
-      data.get("passwordConfirmation")?.toString() || "";
-    const email = data.get("email")?.toString() || "";
-    const role = data.get("role")?.toString() || "";
-    const infoUser = {
-      id: params.userId || "",
-      name: name,
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-      role: role,
+    const submit = {
+      id: params!.userId,
+      name: data.get("name")!.toString(),
+      password: data.get("password")?.toString() || "",
+      passwordConfirmation: data.get("passwordConfirmation")?.toString() || "",
+      email: data.get("email")!.toString() || "",
+      role: data.get("role")!.toString() || "",
     };
-    if (infoUser.password === infoUser.passwordConfirmation) {
-      if (Validations.verifyPasswordLength(password) || password.length == 0) {
-        if (Validations.verifyNameLength(name)) {
-          if (Validations.verifyIfIsEmail(email)) {
-            if (email == mail) {
-              console.log(mail)
-              if (infoUser.password.length > 0) {
-                await UserService.editUser(
-                  infoUser.id,
-                  infoUser.name,
-                  infoUser.email,
-                  infoUser.role,
-                  infoUser.password
-                ).then(message.success("Usuário atualizado com sucesso."));
-              } else {
-                await UserService.editUser(
-                  infoUser.id,
-                  infoUser.name,
-                  infoUser.email,
-                  infoUser.role
-                ).then(message.success("Usuário atualizado com sucesso."));
-              }
-            } else {
-              if (await Validations.verifyIfEmailExists(email)) {
-                if (infoUser.password.length > 0) {
-                  await UserService.editUser(
-                    infoUser.id,
-                    infoUser.name,
-                    infoUser.email,
-                    infoUser.role,
-                    infoUser.password
-                  ).then(message.success("Usuário atualizado com sucesso."));
-                } else {
-                  await UserService.editUser(
-                    infoUser.id,
-                    infoUser.name,
-                    infoUser.email,
-                    infoUser.role
-                  ).then(message.success("Usuário atualizado com sucesso."));
-                }
-              } else {
-                return message.error("E-mail já cadastrado.");
-              }
-            }
-          } else {
-            return message.error("E-mail inválido.");
-          }
-        } else {
-          return message.error("Nome inválido.");
-        }
-      } else {
-        message.error("A senha deve possuir no mínimo 6 caracteres.");
-      }
-    } else {
-      message.error("As senhas devem ser iguais.");
-    }
+    await userHandles.submit(submit, mail);
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -123,9 +61,8 @@ export default function EditUser() {
   };
 
   const handleDeleteUser = async () => {
-    await UserService.deleteUser(user?.id || "").then(() => {
+    userHandles.deleteUser(user!.id).then(() => {
       history("/users");
-      message.success("Usuário excluído com sucesso.");
     });
   };
 

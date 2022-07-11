@@ -10,3 +10,12 @@ export interface IProjectEntity {
     commissionValue: number,
     status: boolean
 }
+
+export interface CreateProjectEntity {
+    clientName: string,
+    description: string,
+    idOfResponsible: string,
+    dealDate: string,
+    numberOfInstallments: number,
+    price: number
+}

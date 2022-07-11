@@ -1,4 +1,5 @@
 import { message } from "antd";
+import { IUserEntity } from "../context/AuthProvider/types";
 import { Api } from "../services/api";
 
 export default class Validations {
@@ -27,7 +28,7 @@ export default class Validations {
   }
 
   static async verifyIfEmailExists(email: string) {
-    let users = [];
+    let users: IUserEntity[] = [];
     let result: boolean = true;
     await Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
       users = res.data;

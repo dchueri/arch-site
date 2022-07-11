@@ -1,4 +1,6 @@
-import * as React from "react";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Link } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,15 +8,10 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { IUserEntity, UserProps } from "../../context/AuthProvider/types";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, Link, Stack } from "@mui/material";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import r from "../../context/routes.json";
-import { Api } from "../../services/api";
-import { getUserLocalStorage } from "../../context/AuthProvider/util";
+import { IUserEntity } from "../../../context/AuthProvider/types";
+import routesList from "../../../routes/routesList.json";
+import { Api } from "../../../services/api";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,9 +42,9 @@ export default function UsersTable() {
   const [users, setUsers] = useState<IUserEntity[]>([]);
 
   useEffect(() => {
-    Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
-      setUsers(res.data);
-    });
+      Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
+        setUsers(res.data);
+      });
   }, []);
 
   return (
@@ -71,7 +68,7 @@ export default function UsersTable() {
                 <StyledTableCell>{user.email}</StyledTableCell>
                 <StyledTableCell>{user.role}</StyledTableCell>
                 <StyledTableCell>
-                  <Link href={r.editUser + user.id}>
+                  <Link href={routesList.editUser + user.id}>
                     <ModeEditIcon />
                   </Link>
                 </StyledTableCell>

@@ -1,9 +1,10 @@
 {
     "login": "/login",
     "usersList": "/users",
-    "registerUser": "/users/register-user",
+    "registerUser": "/users/register",
     "projects": "/projects",
     "editUser": "/users/edit/",
     "projectsList": "/projects",
-    "editProject": "/projects/edit"
+    "editProject": "/projects/edit",
+    "registerProject": "/projects/register"
 }

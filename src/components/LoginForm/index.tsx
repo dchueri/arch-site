@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { useAuth } from "../../context/AuthProvider/useAuth";
 import { Button, Form, message } from "antd";
-import { useNavigate } from "react-router-dom";
-import "./style.css";
-import { Input } from "@mui/material";
-import styled from "styled-components";
 import "antd/dist/antd.css";
-import { getUserLocalStorage } from "../../context/AuthProvider/util";
-import r from '../../context/routes.json'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { useAuth } from "../../context/AuthProvider/useAuth";
+import routesList from "../../routes/routesList.json";
+import "./style.css";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -24,7 +22,7 @@ export function LoginForm() {
     values.password = password;
     try {
       await auth.authenticate(values.email, values.password);
-      history(r.usersList);
+      history(routesList.usersList);
     } catch (e) {
       console.log(e)
       message.error("E-mail ou senha inválidos");

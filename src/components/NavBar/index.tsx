@@ -1,19 +1,15 @@
-import { useAuth } from "../../context/AuthProvider/useAuth";
-import Button from "@mui/material/Button";
+import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import {
   AppBar,
-  Box,
-  CssBaseline,
-  IconButton,
+  Box, IconButton,
   Stack,
   Toolbar,
-  Typography,
+  Typography
 } from "@mui/material";
-import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
-import { message } from "antd";
-import React from "react";
+import Button from "@mui/material/Button";
 import styled from "styled-components";
-import r from "../../context/routes.json";
+import { useAuth } from "../../context/AuthProvider/useAuth";
+import routesList from "../../routes/routesList.json";
 
 export function NavBar() {
   const auth = useAuth();
@@ -61,7 +57,7 @@ export function NavBar() {
           <Stack direction="row" spacing={2}>
             <ButtonS
               key="users-list"
-              href={r.usersList}
+              href={routesList.usersList}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Usuários
@@ -70,7 +66,7 @@ export function NavBar() {
           <Stack direction="row" spacing={2}>
             <ButtonS
               key="project-list"
-              href={r.projects}
+              href={routesList.projects}
               sx={{ my: 2, color: "white", display: "block" }}
             >
               Projetos
