@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginForm } from "../components/LoginForm";
+import EditProject from "../components/Project/EditProject";
 import { ProjectsList } from "../components/Project/ProjectsList";
 import RegisterProject from "../components/Project/RegisterProject";
 import { ProtectedLayout } from "../components/ProtectedLayout";
@@ -50,6 +51,14 @@ export const IndexRoutes = () => {
           element={
             <ProtectedLayout>
               <RegisterProject />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.editProject + ":projectId"}
+          element={
+            <ProtectedLayout>
+              <EditProject/>
             </ProtectedLayout>
           }
         />

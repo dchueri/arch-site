@@ -14,8 +14,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IUserEntity } from "../../../context/AuthProvider/types";
 import { NavBar } from "../../NavBar";
-import UserHandles from "../handles";
-import UserService from "../services";
+import UserServices from "../services";
 
 export default function EditUser() {
   const [user, setUser] = useState<IUserEntity>();
@@ -24,11 +23,10 @@ export default function EditUser() {
   const theme = createTheme();
   const params = useParams();
   const history = useNavigate();
-  const userHandles = new UserHandles();
 
   useEffect(() => {
     const fetchData = async () => {
-      const newUser = await UserService.findOne(params.userId!);
+      const newUser = await UserServices.findOne(params.userId!);
       setUser(newUser);
       setRole(newUser.role);
       setMail(newUser.email);
@@ -47,7 +45,7 @@ export default function EditUser() {
       email: data.get("email")!.toString() || "",
       role: data.get("role")!.toString() || "",
     };
-    await userHandles.submit(submit, mail);
+    await UserServices.submitEditForm(submit, mail);
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -61,7 +59,7 @@ export default function EditUser() {
   };
 
   const handleDeleteUser = async () => {
-    userHandles.deleteUser(user!.id).then(() => {
+    UserServices.deleteUser(user!.id).then(() => {
       history("/users");
     });
   };

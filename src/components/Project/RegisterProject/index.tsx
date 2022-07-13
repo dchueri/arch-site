@@ -27,7 +27,7 @@ export default function RegisterProject() {
   const [date, setDate] = useState<Date | null>(null);
   const [userNames, setUserNames] = useState<string[]>([]);
   const [nameOfResponsible, setNameOfResponsible] = useState("");
-  const [userIds, setUserIds] = useState<any[]>([]);
+  const [userIds, setUserIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (userNames.length < 1) {

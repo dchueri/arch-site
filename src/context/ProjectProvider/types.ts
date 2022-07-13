@@ -19,3 +19,13 @@ export interface CreateProjectEntity {
     numberOfInstallments: number,
     price: number
 }
+
+export interface EditProjectEntity {
+    id: string,
+    clientName: string,
+    description: string,
+    idOfResponsible: string,
+    dealDate: string,
+    numberOfInstallments: number,
+    price: number
+}
