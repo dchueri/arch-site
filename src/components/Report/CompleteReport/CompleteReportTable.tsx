@@ -1,6 +1,6 @@
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { Link } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,11 +13,10 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { IUserEntity } from "../../../context/AuthProvider/types";
 import {
-  BonusPerMonth,
   IProjectEntity
 } from "../../../context/ProjectProvider/types";
-import routesList from "../../../routes/routesList.json";
 import { Api } from "../../../services/api";
+import MonthsRow from "./MonthsRow";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,21 +45,8 @@ const TableContainerS = styled(TableContainer)`
 export default function ProjectsTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const [users, setUsers] = useState<IUserEntity[]>([]);
+  let total: number = 0;
   const [open, setOpen] = useState(false);
-  const bonusPerMonth: BonusPerMonth = {
-    jan: 0,
-    fev: 10,
-    mar: 20,
-    abr: 30,
-    mai: 40,
-    jun: 50,
-    jul: 60,
-    ago: 70,
-    set: 80,
-    out: 90,
-    nov: 100,
-    dez: 110,
-  };
 
   useEffect(() => {
     Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
@@ -92,9 +78,13 @@ export default function ProjectsTable() {
     return formated;
   };
 
+  const calculateTotal = (commissionValue: number) => {
+    total += commissionValue;
+  };
+
   return (
     <>
-      <TableContainerS component={Paper}>
+      <TableContainerS>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -102,37 +92,60 @@ export default function ProjectsTable() {
               <StyledTableCell>Descrição</StyledTableCell>
               <StyledTableCell>Responsável</StyledTableCell>
               <StyledTableCell>Prazo da primeira entrega</StyledTableCell>
-              <StyledTableCell>Preço</StyledTableCell>
+              <StyledTableCell>Comissão</StyledTableCell>
               <StyledTableCell>Quantidade de parcelas</StyledTableCell>
               <StyledTableCell></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {projects.map((projects) => (
-              <StyledTableRow key={projects.clientName}>
-                <StyledTableCell component="th" scope="row">
-                  {projects.clientName}
-                </StyledTableCell>
-                <StyledTableCell>{projects.description}</StyledTableCell>
-                <StyledTableCell>
-                  {catchName(projects.idOfResponsible)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {handleDate(projects.firstDeliveryDate)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {handleFormatPrice(projects.price)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {projects.numberOfInstallments}
-                </StyledTableCell>
-                <StyledTableCell>
-                  <Link href={routesList.editProject + projects.id}>
-                    <ModeEditIcon />
-                  </Link>
-                </StyledTableCell>
-              </StyledTableRow>
+            {projects.map((project) => (
+              <>
+                <StyledTableRow key={project.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {project.clientName}
+                  </StyledTableCell>
+                  <StyledTableCell>{project.description}</StyledTableCell>
+                  <StyledTableCell>
+                    {catchName(project.idOfResponsible)}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {handleDate(project.firstDeliveryDate)}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <>
+                      {handleFormatPrice(project.commissionValue)}
+                      {calculateTotal(project.commissionValue)}
+                    </>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {project.numberOfInstallments}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      onClick={() => setOpen(!open)}
+                    >
+                      {open ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <MonthsRow
+                    open={open}
+                    project={project}
+                  />
+                </StyledTableRow>
+              </>
             ))}
+            <StyledTableRow>
+              <StyledTableCell>Total:</StyledTableCell>
+              <StyledTableCell>{handleFormatPrice(total)}</StyledTableCell>
+            </StyledTableRow>
           </TableBody>
         </Table>
       </TableContainerS>

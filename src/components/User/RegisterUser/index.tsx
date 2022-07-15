@@ -12,7 +12,6 @@ import { message } from "antd";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Validations from "../../../validations/Validations";
-import { NavBar } from "../../NavBar";
 import UserService from "../services";
 
 export default function RegisterUser() {
@@ -46,7 +45,6 @@ export default function RegisterUser() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

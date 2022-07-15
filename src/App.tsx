@@ -2,7 +2,8 @@ import { AuthProvider } from "./context/AuthProvider";
 import { useAuth } from "./context/AuthProvider/useAuth";
 
 import { createTheme } from "@mui/material";
-import { IndexRoutes } from "./routes/routes";
+import { NavBar } from "./components/NavBar";
+import { IndexRoutes } from "./routes";
 
 function App() {
   const auth = useAuth();
@@ -14,7 +15,10 @@ function App() {
 
   return (
     <AuthProvider>
-      <IndexRoutes/>
+      <>
+        <NavBar />
+        <IndexRoutes />
+      </>
     </AuthProvider>
   );
 }

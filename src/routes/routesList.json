@@ -6,5 +6,6 @@
     "editUser": "/users/edit/",
     "projectsList": "/projects",
     "editProject": "/projects/edit",
-    "registerProject": "/projects/register"
+    "registerProject": "/projects/register",
+    "completeReport": "/complete-report"
 }

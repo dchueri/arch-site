@@ -8,7 +8,7 @@ import routesList from "../../routes/routesList.json";
 export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
   const Container = styled.div`
     text-align: center;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     align-items: center;
   `

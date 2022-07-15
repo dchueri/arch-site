@@ -23,7 +23,6 @@ import { useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IProjectEntity } from "../../../context/ProjectProvider/types";
 import { Api } from "../../../services/api";
-import { NavBar } from "../../NavBar";
 import ProjectServices from "../services";
 
 export default function EditProject() {
@@ -144,7 +143,6 @@ export default function EditProject() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

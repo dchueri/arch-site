@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import routesList from "../../../routes/routesList.json";
 import { Api } from "../../../services/api";
-import { NavBar } from "../../NavBar";
 import ProjectServices from "../services";
 
 export default function RegisterProject() {
@@ -84,7 +83,6 @@ export default function RegisterProject() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

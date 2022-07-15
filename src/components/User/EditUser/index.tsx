@@ -13,7 +13,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IUserEntity } from "../../../context/AuthProvider/types";
-import { NavBar } from "../../NavBar";
 import UserServices from "../services";
 
 export default function EditUser() {
@@ -66,7 +65,6 @@ export default function EditUser() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

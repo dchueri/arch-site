@@ -4,6 +4,7 @@ import EditProject from "../components/Project/EditProject";
 import { ProjectsList } from "../components/Project/ProjectsList";
 import RegisterProject from "../components/Project/RegisterProject";
 import { ProtectedLayout } from "../components/ProtectedLayout";
+import Report from "../components/Report/CompleteReport";
 import EditUser from "../components/User/EditUser";
 import RegisterUser from "../components/User/RegisterUser";
 import { UsersList } from "../components/User/UsersList";
@@ -58,7 +59,15 @@ export const IndexRoutes = () => {
           path={routesList.editProject + ":projectId"}
           element={
             <ProtectedLayout>
-              <EditProject/>
+              <EditProject />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.completeReport}
+          element={
+            <ProtectedLayout>
+              <Report />
             </ProtectedLayout>
           }
         />

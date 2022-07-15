@@ -1,12 +1,18 @@
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import {
   AppBar,
-  Box, IconButton,
+  Box,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
   Stack,
   Toolbar,
   Typography
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
+import { Fragment } from "react";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthProvider/useAuth";
 import routesList from "../../routes/routesList.json";
@@ -35,7 +41,7 @@ export function NavBar() {
   }
 
   return (
-    <AppBarS position="static">
+    <AppBarS position="static" className="nav-bar">
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="logo">
           <MapsHomeWorkIcon />
@@ -71,6 +77,40 @@ export function NavBar() {
             >
               Projetos
             </ButtonS>
+          </Stack>
+          <Stack direction="row" spacing={2}>
+            {/*             <ButtonS
+              key="project-list"
+              href={routesList.report}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Relatório
+            </ButtonS> */}
+            <PopupState variant="popover" popupId="demo-popup-menu">
+              {(popupState) => (
+                <Fragment>
+                  <ButtonS
+                    sx={{ my: 2, color: "white", display: "block" }}
+                    {...bindTrigger(popupState)}
+                  >
+                    Relatórios
+                  </ButtonS>
+                  <Menu {...bindMenu(popupState)}>
+                    <Link href={routesList.completeReport}>
+                      <MenuItem onClick={popupState.close}>
+                        Relatório completo
+                      </MenuItem>
+                    </Link>
+                    <MenuItem onClick={popupState.close}>
+                      Relatório por projetista
+                    </MenuItem>
+                    <MenuItem onClick={popupState.close}>
+                      Relatório mensal
+                    </MenuItem>
+                  </Menu>
+                </Fragment>
+              )}
+            </PopupState>
           </Stack>
         </Box>
 
