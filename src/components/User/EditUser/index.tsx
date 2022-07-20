@@ -108,8 +108,8 @@ export default function EditUser() {
                   label="Cargo"
                   onChange={handleChange}
                 >
-                  <MenuItem value="GUEST">Administrador</MenuItem>
-                  <MenuItem value="EMPLOYER">Projetista</MenuItem>
+                  <MenuItem value="ADMIN">Administrador</MenuItem>
+                  <MenuItem value="PROJETISTA">Projetista</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={12}>

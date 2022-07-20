@@ -9,5 +9,6 @@
     "registerProject": "/projects/register",
     "completeReport": "/report/complete",
     "userReport": "/report/user",
-    "monthlyReport": "/report/monthly"
+    "monthlyReport": "/report/monthly",
+    "myProjects": "/my-projects"
 }

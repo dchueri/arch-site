@@ -1,5 +1,6 @@
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { Link } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { IconButton } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,12 +12,11 @@ import TableRow from "@mui/material/TableRow";
 import "moment";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { IUserEntity } from "../../../context/AuthProvider/types";
-import {
-  IProjectEntity
-} from "../../../context/ProjectProvider/types";
-import routesList from "../../../routes/routesList.json";
+import { getUserLocalStorage } from "../../../context/AuthProvider/util";
+import { IProjectEntity } from "../../../context/ProjectProvider/types";
+
 import { Api } from "../../../services/api";
+import MyMonthsRow from "./MyMonthsRow";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,10 +42,10 @@ const TableContainerS = styled(TableContainer)`
   margin: auto;
 `;
 
-export default function ProjectsTable() {
+export default function MyProjectsTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
-  const [users, setUsers] = useState<IUserEntity[]>([]);
-  const [open, setOpen] = useState(false);
+  const user = getUserLocalStorage();
+  const [open, setOpen] = useState<Record<string, boolean>>({});
   const bonusPerMonth = {
     jan: 0,
     fev: 10,
@@ -62,21 +62,10 @@ export default function ProjectsTable() {
   };
 
   useEffect(() => {
-    Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
-      setUsers(res.data);
-    });
     Api.get("https://dcode-arch-app.herokuapp.com/contract").then((res) => {
       setProjects(res.data);
     });
   }, []);
-
-  const catchName = (id: string) => {
-    return users.map((u) => {
-      if (u.id === id) {
-        return u.name;
-      }
-    });
-  };
 
   const handleDate = (dateString: string) => {
     const date = moment(dateString, moment.ISO_8601, true).utc();
@@ -99,39 +88,55 @@ export default function ProjectsTable() {
             <TableRow>
               <StyledTableCell>Cliente</StyledTableCell>
               <StyledTableCell>Descrição</StyledTableCell>
-              <StyledTableCell>Responsável</StyledTableCell>
               <StyledTableCell>Prazo da primeira entrega</StyledTableCell>
-              <StyledTableCell>Preço</StyledTableCell>
+              <StyledTableCell>Valor da comissão</StyledTableCell>
               <StyledTableCell>Quantidade de parcelas</StyledTableCell>
               <StyledTableCell></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {projects.map((projects) => (
-              <StyledTableRow key={projects.clientName}>
-                <StyledTableCell component="th" scope="row">
-                  {projects.clientName}
-                </StyledTableCell>
-                <StyledTableCell>{projects.description}</StyledTableCell>
-                <StyledTableCell>
-                  {catchName(projects.idOfResponsible)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {handleDate(projects.firstDeliveryDate)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {handleFormatPrice(projects.price)}
-                </StyledTableCell>
-                <StyledTableCell>
-                  {projects.numberOfInstallments}
-                </StyledTableCell>
-                <StyledTableCell>
-                  <Link href={routesList.editProject + projects.id}>
-                    <ModeEditIcon />
-                  </Link>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {projects.map((project) =>
+              project.idOfResponsible == user.id ? (
+                <>
+                  <StyledTableRow key={project.clientName}>
+                    <StyledTableCell component="th" scope="row">
+                      {project.clientName}
+                    </StyledTableCell>
+                    <StyledTableCell>{project.description}</StyledTableCell>
+                    <StyledTableCell>
+                      {handleDate(project.firstDeliveryDate)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {handleFormatPrice(project.commissionValue)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {project.numberOfInstallments}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() =>
+                          setOpen((oldOpen) => ({
+                            ...oldOpen,
+                            [project.id]: !oldOpen[project.id],
+                          }))
+                        }
+                      >
+                        {open[project.id] ? (
+                          <KeyboardArrowUpIcon />
+                        ) : (
+                          <KeyboardArrowDownIcon />
+                        )}
+                      </IconButton>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                  <StyledTableRow>
+                    <MyMonthsRow open={open[project.id]} project={project} />
+                  </StyledTableRow>
+                </>
+              ) : null
+            )}
           </TableBody>
         </Table>
       </TableContainerS>

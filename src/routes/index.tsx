@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginForm } from "../components/LoginForm";
 import EditProject from "../components/Project/EditProject";
+import { MyProjectsList } from "../components/Project/MyProjectsList";
 import { ProjectsList } from "../components/Project/ProjectsList";
 import RegisterProject from "../components/Project/RegisterProject";
 import { ProtectedLayout } from "../components/ProtectedLayout";
@@ -20,7 +21,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.usersList}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <UsersList />
             </ProtectedLayout>
           }
@@ -28,7 +29,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.registerUser}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <RegisterUser />
             </ProtectedLayout>
           }
@@ -36,7 +37,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.editUser + ":userId"}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <EditUser />
             </ProtectedLayout>
           }
@@ -44,7 +45,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.projectsList}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <ProjectsList />
             </ProtectedLayout>
           }
@@ -52,7 +53,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.registerProject}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <RegisterProject />
             </ProtectedLayout>
           }
@@ -60,7 +61,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.editProject + ":projectId"}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <EditProject />
             </ProtectedLayout>
           }
@@ -68,7 +69,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.completeReport}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <CompleteReport />
             </ProtectedLayout>
           }
@@ -76,7 +77,7 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.userReport}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <UserReport />
             </ProtectedLayout>
           }
@@ -84,8 +85,16 @@ export const IndexRoutes = () => {
         <Route
           path={routesList.monthlyReport}
           element={
-            <ProtectedLayout>
+            <ProtectedLayout role={"ADMIN"}>
               <MonthlyReport />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.myProjects}
+          element={
+            <ProtectedLayout role={"PROJETISTA"}>
+              <MyProjectsList />
             </ProtectedLayout>
           }
         />
