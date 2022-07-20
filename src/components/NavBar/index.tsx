@@ -106,9 +106,11 @@ export function NavBar() {
                         Relatório por projetista
                       </MenuItem>
                     </Link>
-                    <MenuItem onClick={popupState.close}>
-                      Relatório mensal
-                    </MenuItem>
+                    <Link href={routesList.monthlyReport}>
+                      <MenuItem onClick={popupState.close}>
+                        Relatório mensal
+                      </MenuItem>
+                    </Link>
                   </Menu>
                 </Fragment>
               )}

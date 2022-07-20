@@ -8,5 +8,6 @@
     "editProject": "/projects/edit",
     "registerProject": "/projects/register",
     "completeReport": "/report/complete",
-    "userReport": "/report/user"
+    "userReport": "/report/user",
+    "monthlyReport": "/report/monthly"
 }
