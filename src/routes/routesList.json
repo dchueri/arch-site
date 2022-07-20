@@ -10,5 +10,7 @@
     "completeReport": "/report/complete",
     "userReport": "/report/user",
     "monthlyReport": "/report/monthly",
-    "myProjects": "/my-projects"
+    "myProjects": "/my-projects",
+    "myProfile": "/my-profile",
+    "myMonthlyReport": "/report/my"
 }

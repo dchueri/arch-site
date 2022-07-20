@@ -4,7 +4,7 @@ import CompleteReportTable from "./CompleteReportTable";
 const CompleteReport = memo(() => {
   return (
     <>
-      <div>Relatório Completo</div>
+      <h1>Relatório Completo</h1>
       <CompleteReportTable/>
     </>
   );

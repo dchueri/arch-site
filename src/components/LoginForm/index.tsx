@@ -22,7 +22,7 @@ export function LoginForm() {
     values.password = password;
     try {
       await auth.authenticate(values.email, values.password);
-      history(routesList.usersList);
+      history(routesList.myProfile);
     } catch (e) {
       console.log(e)
       message.error("E-mail ou senha inválidos");
@@ -64,7 +64,7 @@ export function LoginForm() {
                 htmlType="submit"
                 className="login-form-btn"
               >
-                Login
+                Entrar
               </ButtonStyle>
             </div>
           </Form>

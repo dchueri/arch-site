@@ -7,8 +7,10 @@ import RegisterProject from "../components/Project/RegisterProject";
 import { ProtectedLayout } from "../components/ProtectedLayout";
 import CompleteReport from "../components/Report/CompleteReport";
 import MonthlyReport from "../components/Report/MonthlyReport";
+import MyMonthlyReport from "../components/Report/MyMonthlyReport";
 import UserReport from "../components/Report/UserReport";
 import EditUser from "../components/User/EditUser";
+import MyProfile from "../components/User/MyProfile";
 import RegisterUser from "../components/User/RegisterUser";
 import { UsersList } from "../components/User/UsersList";
 import routesList from "./routesList.json";
@@ -95,6 +97,22 @@ export const IndexRoutes = () => {
           element={
             <ProtectedLayout role={"PROJETISTA"}>
               <MyProjectsList />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.myProfile}
+          element={
+            <ProtectedLayout>
+              <MyProfile />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.myMonthlyReport}
+          element={
+            <ProtectedLayout>
+              <MyMonthlyReport />
             </ProtectedLayout>
           }
         />

@@ -117,6 +117,15 @@ export function NavBar() {
                 )}
               </PopupState>
             </Stack>
+            <Stack direction="row" spacing={2}>
+              <ButtonS
+                key="my-profile"
+                href={routesList.myProfile}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Meu perfil
+              </ButtonS>
+            </Stack>
           </Box>
 
           <Button onClick={logout} variant="contained" color="primary" href="/login">
@@ -176,7 +185,7 @@ export function NavBar() {
                           Relatório completo
                         </MenuItem>
                       </Link>
-                      <Link href={routesList.monthlyReport}>
+                      <Link href={routesList.myMonthlyReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório mensal
                         </MenuItem>
@@ -185,6 +194,15 @@ export function NavBar() {
                   </Fragment>
                 )}
               </PopupState>
+            </Stack>
+            <Stack direction="row" spacing={2}>
+              <ButtonS
+                key="my-profile"
+                href={routesList.myProfile}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Meu perfil
+              </ButtonS>
             </Stack>
           </Box>
 

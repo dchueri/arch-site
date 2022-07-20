@@ -102,7 +102,7 @@ const ProjectsTable = (props: {
                       {project.clientName}
                     </StyledTableCell>
                     <StyledTableCell>{project.description}</StyledTableCell>
-                    <StyledTableCell>{project.idOfResponsible}</StyledTableCell>
+                    <StyledTableCell>{project.description}</StyledTableCell>
                     <StyledTableCell>
                       {handleDate(project.firstDeliveryDate)}
                     </StyledTableCell>

@@ -10,6 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
 import { IUserEntity } from "../../../context/AuthProvider/types";
+import { getUserLocalStorage } from "../../../context/AuthProvider/util";
 import routesList from "../../../routes/routesList.json";
 import { Api } from "../../../services/api";
 
@@ -40,10 +41,14 @@ const TableContainerS = styled(TableContainer)`
 
 export default function UsersTable() {
   const [users, setUsers] = useState<IUserEntity[]>([]);
+  const me = getUserLocalStorage();
 
   useEffect(() => {
+    let arr: Array<IUserEntity> = [];
       Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
-        setUsers(res.data);
+        arr = res.data;
+        arr.map(u => u.id == me.id ? arr.splice(arr.indexOf(u), 1) : null)
+        setUsers(arr);
       });
   }, []);
 

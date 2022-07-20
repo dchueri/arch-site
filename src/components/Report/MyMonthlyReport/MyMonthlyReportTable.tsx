@@ -9,6 +9,7 @@ import "moment";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { IUserEntity } from "../../../context/AuthProvider/types";
+import { getUserLocalStorage } from "../../../context/AuthProvider/util";
 import { IProjectEntity } from "../../../context/ProjectProvider/types";
 import { Api } from "../../../services/api";
 import ProjectServices from "../../Project/services";
@@ -39,7 +40,7 @@ const TableContainerS = styled(TableContainer)`
   margin: auto;
 `;
 
-export default function UserReportTable() {
+export default function MyMonthlyReportTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const [projectsByMonth, setProjectsByMonth] = useState<IProjectEntity[]>([]);
   const [users, setUsers] = useState<IUserEntity[]>([]);
@@ -52,6 +53,7 @@ export default function UserReportTable() {
   let total: number = 0;
   const [open, setOpen] = useState(false);
   let projectsWithBonusOnMonth: IProjectEntity[] = [];
+  const user = getUserLocalStorage();
 
   useEffect(() => {
     let usersList: IUserEntity[] = [];
@@ -70,7 +72,14 @@ export default function UserReportTable() {
     });
 
     Api.get("https://dcode-arch-app.herokuapp.com/contract").then((res) => {
-      setProjects(res.data);
+      let arr: IProjectEntity[] = [];
+      let myProjects: IProjectEntity[] = [];
+      arr = res.data;
+      arr.map((p) =>
+        p.idOfResponsible == user.id ? myProjects.push(p) : null
+      );
+      console.log(myProjects)
+      setProjects(myProjects);
     });
   }, []);
 
@@ -133,27 +142,29 @@ export default function UserReportTable() {
   };
 
   const handleVerifyProjectsOfMonth = (month: number) => {
-    projects.map(p => {
-      const monthsWithBonus = ReportServices.defineMonthsWithBonus(p.commissionValue, p.dealDate, p.numberOfInstallments);
+    projects.map((p) => {
+      const monthsWithBonus = ReportServices.defineMonthsWithBonus(
+        p.commissionValue,
+        p.dealDate,
+        p.numberOfInstallments
+      );
       if (monthsWithBonus[month] > 0) {
-        projectsWithBonusOnMonth.push(p)
+        projectsWithBonusOnMonth.push(p);
       }
-    })
+    });
     setProjectsByMonth(projectsWithBonusOnMonth);
-  }
+  };
 
   return (
     <>
-      <h1>
-        Relatório Mensal
-      </h1>
+      <h1>Relatório Mensal</h1>
       <Stack
         spacing={3}
         sx={{
           alignItems: "center",
         }}
       >
-        <Grid container spacing={2} justifyContent={'center'}>
+        <Grid container spacing={2} justifyContent={"center"}>
           <Grid item xs={12} sm={3}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -175,7 +186,12 @@ export default function UserReportTable() {
             </LocalizationProvider>
           </Grid>
         </Grid>
-        <ProjectsTable projects={projectsByMonth} month={month} userNames={userNames} userIds={userIds} />
+        <ProjectsTable
+          projects={projectsByMonth}
+          month={month}
+          userNames={userNames}
+          userIds={userIds}
+        />
       </Stack>
     </>
   );
