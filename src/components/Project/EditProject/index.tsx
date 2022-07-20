@@ -43,7 +43,7 @@ export default function EditProject() {
       const resProject = await ProjectServices.findOne(params.projectId!);
       setProject(resProject);
       if (userNames.length < 1) {
-        await Api.get("https://dcode-arch-app.herokuapp.com/user").then(
+        Api.get("https://dcode-arch-app.herokuapp.com/user").then(
           (res) => {
             let names = [];
             let ids = [];

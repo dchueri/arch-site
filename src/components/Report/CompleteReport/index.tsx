@@ -1,7 +1,7 @@
 import { memo } from "react";
 import CompleteReportTable from "./CompleteReportTable";
 
-const Report = memo(() => {
+const CompleteReport = memo(() => {
   return (
     <>
       <div>Relatório Completo</div>
@@ -10,4 +10,4 @@ const Report = memo(() => {
   );
 });
 
-export default Report;
+export default CompleteReport;

@@ -12,9 +12,7 @@ import "moment";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { IUserEntity } from "../../../context/AuthProvider/types";
-import {
-  IProjectEntity
-} from "../../../context/ProjectProvider/types";
+import { IProjectEntity } from "../../../context/ProjectProvider/types";
 import { Api } from "../../../services/api";
 import MonthsRow from "./MonthsRow";
 
@@ -42,11 +40,11 @@ const TableContainerS = styled(TableContainer)`
   margin: auto;
 `;
 
-export default function ProjectsTable() {
+export default function CompleteReport() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const [users, setUsers] = useState<IUserEntity[]>([]);
   let total: number = 0;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
@@ -124,9 +122,14 @@ export default function ProjectsTable() {
                     <IconButton
                       aria-label="expand row"
                       size="small"
-                      onClick={() => setOpen(!open)}
+                      onClick={() =>
+                        setOpen((oldOpen) => ({
+                          ...oldOpen,
+                          [project.id]: !oldOpen[project.id],
+                        }))
+                      }
                     >
-                      {open ? (
+                      {open[project.id] ? (
                         <KeyboardArrowUpIcon />
                       ) : (
                         <KeyboardArrowDownIcon />
@@ -135,10 +138,7 @@ export default function ProjectsTable() {
                   </StyledTableCell>
                 </StyledTableRow>
                 <StyledTableRow>
-                  <MonthsRow
-                    open={open}
-                    project={project}
-                  />
+                  <MonthsRow open={open[project.id]} project={project}/>
                 </StyledTableRow>
               </>
             ))}

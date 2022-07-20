@@ -7,5 +7,6 @@
     "projectsList": "/projects",
     "editProject": "/projects/edit",
     "registerProject": "/projects/register",
-    "completeReport": "/complete-report"
+    "completeReport": "/report/complete",
+    "userReport": "/report/user"
 }

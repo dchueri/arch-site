@@ -5,7 +5,8 @@ export class ReportServices {
     commissionValue: number,
     numberOfInstallments: number
   ): number {
-    const commissionPerMonth = Math.round((commissionValue / numberOfInstallments) * 100) / 100;
+    const commissionPerMonth =
+      Math.round((commissionValue / numberOfInstallments) * 100) / 100;
     return commissionPerMonth;
   }
 
@@ -25,7 +26,7 @@ export class ReportServices {
     commissionValue: number,
     dealDate: string,
     numberOfInstallments: number
-  ) {
+  ): Array<number> {
     const bonusInstallment = this.divideBonusPerMonth(
       commissionValue,
       numberOfInstallments
@@ -34,12 +35,26 @@ export class ReportServices {
 
     let month = this.verifyDateOfFistBonus(dealDate).get("month");
     for (let i = 0; i < numberOfInstallments; i++) {
-        if (month+i > 11) {
-            month -= 12;
-        }
+      if (month + i > 11) {
+        month -= 12;
+      }
       bonusPerMonth[month + i] = bonusInstallment;
     }
 
     return bonusPerMonth;
+  }
+
+  static definePaymentOfMonth(bonusPerMonth: Array<number>) {
+    const dayOfPayment = 10;
+    const today = moment();
+    if (today.date() < dayOfPayment) {
+      return bonusPerMonth[today.month()];
+    } else {
+      if (today.month() + 1 < 12) {
+        return bonusPerMonth[today.month() + 1];
+      } else {
+        return bonusPerMonth[today.month() - 10];
+      }
+    }
   }
 }
