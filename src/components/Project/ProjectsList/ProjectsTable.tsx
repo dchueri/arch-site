@@ -41,20 +41,6 @@ export default function ProjectsTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const [users, setUsers] = useState<IUserEntity[]>([]);
   const [open, setOpen] = useState(false);
-  const bonusPerMonth = {
-    jan: 0,
-    fev: 10,
-    mar: 20,
-    abr: 30,
-    mai: 40,
-    jun: 50,
-    jul: 60,
-    ago: 70,
-    set: 80,
-    out: 90,
-    nov: 100,
-    dez: 110,
-  };
 
   useEffect(() => {
     Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
