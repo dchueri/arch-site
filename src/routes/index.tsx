@@ -21,6 +21,7 @@ export const IndexRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path={routesList.login} element={<LoginForm />} />
+        <Route path={routesList.root} element={<LoginForm />} />
         <Route
           path={routesList.usersList}
           element={
