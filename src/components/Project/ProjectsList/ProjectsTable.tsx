@@ -37,11 +37,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const TableContainerS = styled(TableContainer)`
-  width: 60vw;
-  margin: auto;
-`;
-
 export default function ProjectsTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const [users, setUsers] = useState<IUserEntity[]>([]);
@@ -93,7 +88,7 @@ export default function ProjectsTable() {
 
   return (
     <>
-      <TableContainerS component={Paper}>
+      <TableContainer sx={{width: '60vw', margin: 'auto'}} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -134,7 +129,7 @@ export default function ProjectsTable() {
             ))}
           </TableBody>
         </Table>
-      </TableContainerS>
+      </TableContainer>
     </>
   );
 }

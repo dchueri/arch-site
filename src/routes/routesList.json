@@ -1,4 +1,5 @@
 {
+    "home": "/",
     "login": "/login",
     "usersList": "/users",
     "registerUser": "/users/register",

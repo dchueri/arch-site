@@ -127,14 +127,28 @@ export function NavBar() {
               </ButtonS>
             </Stack>
           </Box>
+          <Stack direction="row" spacing={2}>
+            <ButtonS
+              key="my-profile"
+              href={routesList.myProfile}
+              sx={{ my: 2, color: "white", display: "block", margin: "0 1em" }}
+            >
+              {user.name}
+            </ButtonS>
+          </Stack>
 
-          <Button onClick={logout} variant="contained" color="primary" href="/login">
+          <Button
+            onClick={logout}
+            variant="contained"
+            color="primary"
+            href="/login"
+          >
             Logout
           </Button>
         </Toolbar>
       </AppBarS>
     );
-  } else if (user && user.role == 'PROJETISTA') {
+  } else if (user && user.role == "PROJETISTA") {
     return (
       <AppBarS position="static" className="nav-bar">
         <Toolbar>
@@ -180,11 +194,6 @@ export function NavBar() {
                       Relatórios
                     </ButtonS>
                     <Menu {...bindMenu(popupState)}>
-                      <Link href={routesList.completeReport}>
-                        <MenuItem onClick={popupState.close}>
-                          Relatório completo
-                        </MenuItem>
-                      </Link>
                       <Link href={routesList.myMonthlyReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório mensal
@@ -205,12 +214,27 @@ export function NavBar() {
               </ButtonS>
             </Stack>
           </Box>
-
-          <Button onClick={logout} variant="contained" color="primary" href="/login">
+          <Stack direction="row" spacing={2}>
+            <ButtonS
+              key="my-profile"
+              href={routesList.myProfile}
+              sx={{ my: 2, color: "white", display: "block", margin: "0 1em" }}
+            >
+              {user.name}
+            </ButtonS>
+          </Stack>
+          <Button
+            onClick={logout}
+            variant="contained"
+            color="primary"
+            href="/login"
+          >
             Logout
           </Button>
         </Toolbar>
       </AppBarS>
     );
+  } else {
+    return <></>;
   }
 }

@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { message } from "antd";
 import moment from "moment";
 import * as React from "react";
 import { useLayoutEffect, useState } from "react";
@@ -81,7 +82,6 @@ export default function EditProject() {
       dealDate = moment(newDate).format("YYYY-MM-DD");
     } else {
       dealDate = moment(date).format("YYYY-MM-DD");
-      console.log(dealDate);
     }
 
     const newProject = {
@@ -93,8 +93,7 @@ export default function EditProject() {
       numberOfInstallments: +project!.numberOfInstallments,
       dealDate: dealDate,
     };
-    ProjectServices.editProject(newProject).then(res => console.log(res));
-    console.log(newProject)
+    ProjectServices.editProject(newProject).then(res => message.success('Projeto alterado com sucesso.'));
   };
 
   const handleDate = (newValue: Date | null) => {

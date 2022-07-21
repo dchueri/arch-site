@@ -34,11 +34,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const TableContainerS = styled(TableContainer)`
-  width: 60vw;
-  margin: auto;
-`;
-
 export default function UsersTable() {
   const [users, setUsers] = useState<IUserEntity[]>([]);
   const me = getUserLocalStorage();
@@ -54,7 +49,7 @@ export default function UsersTable() {
 
   return (
     <>
-      <TableContainerS component={Paper}>
+      <TableContainer sx={{width: '60vw', margin: 'auto'}} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -81,7 +76,7 @@ export default function UsersTable() {
             ))}
           </TableBody>
         </Table>
-      </TableContainerS>
+      </TableContainer>
     </>
   );
 }

@@ -37,11 +37,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const TableContainerS = styled(TableContainer)`
-  width: 60vw;
-  margin: auto;
-`;
-
 export default function MyProjectsTable() {
   const [projects, setProjects] = useState<IProjectEntity[]>([]);
   const user = getUserLocalStorage();
@@ -82,7 +77,7 @@ export default function MyProjectsTable() {
 
   return (
     <>
-      <TableContainerS component={Paper}>
+      <TableContainer sx={{width: '60vw', margin: 'auto'}} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -139,7 +134,7 @@ export default function MyProjectsTable() {
             )}
           </TableBody>
         </Table>
-      </TableContainerS>
+      </TableContainer>
     </>
   );
 }

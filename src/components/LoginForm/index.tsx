@@ -22,9 +22,8 @@ export function LoginForm() {
     values.password = password;
     try {
       await auth.authenticate(values.email, values.password);
-      history(routesList.myProfile);
+      history(routesList.home);
     } catch (e) {
-      console.log(e)
       message.error("E-mail ou senha inválidos");
     }
   }

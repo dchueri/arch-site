@@ -93,7 +93,6 @@ const ProjectsTable = (props: {
         </TableHead>
         <TableBody>
           <>
-          {console.log(props.projects)}
             {props.projects.map((project) => {
               return (
                 <>

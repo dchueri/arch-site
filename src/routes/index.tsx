@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginForm } from "../components/LoginForm";
+import { Home } from "../components/LoginForm/Home";
 import EditProject from "../components/Project/EditProject";
 import { MyProjectsList } from "../components/Project/MyProjectsList";
 import { ProjectsList } from "../components/Project/ProjectsList";
@@ -113,6 +114,14 @@ export const IndexRoutes = () => {
           element={
             <ProtectedLayout>
               <MyMonthlyReport />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path={routesList.home}
+          element={
+            <ProtectedLayout>
+              <Home />
             </ProtectedLayout>
           }
         />

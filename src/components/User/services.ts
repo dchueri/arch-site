@@ -42,7 +42,7 @@ export default class UserServices {
   static async createUser(name: string, email: string, password: string) {
     const user = { name: name, email: email, password: password };
     await Api.post("https://dcode-arch-app.herokuapp.com/user", user)
-      .then((res) => console.log(res))
+      .then((res) => message.success('Usuário cadastrado com sucesso'))
       .catch((res) => message.error(res.response.data.message));
   }
 

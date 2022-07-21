@@ -145,7 +145,7 @@ export default function UserReportTable() {
         }}
       >
         <Grid container spacing={2} justifyContent={'center'}>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 views={["month"]}

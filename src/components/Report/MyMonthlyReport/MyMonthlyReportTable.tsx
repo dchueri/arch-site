@@ -78,7 +78,6 @@ export default function MyMonthlyReportTable() {
       arr.map((p) =>
         p.idOfResponsible == user.id ? myProjects.push(p) : null
       );
-      console.log(myProjects)
       setProjects(myProjects);
     });
   }, []);

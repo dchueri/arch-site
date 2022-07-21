@@ -21,7 +21,7 @@ export default class ProjectServices {
 
   static async createProject(project: CreateProjectEntity) {
     await Api.post("https://dcode-arch-app.herokuapp.com/contract", project)
-      .then((res) => console.log(res))
+      .then((res) => message.success('Projeto criado com sucesso'))
       .catch((res) => message.error(res.response.data.message));
   }
 
@@ -38,7 +38,6 @@ export default class ProjectServices {
     userNames: string[],
     userIds: string[]
   ): string {
-    console.log(userNames[userIds.indexOf(id)])
     return userNames[userIds.indexOf(id)];
   }
 

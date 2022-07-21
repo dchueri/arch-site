@@ -11,13 +11,12 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const user = getUserLocalStorage();
     if (user) {
       setUser(user);
-      console.log(user)
     }
   }, []);
 
   async function authenticate(email: string, password: string) {
     const res = await LoginRequest(email, password);
-    const payload = { token: res.access_token, email, role: res.role, id: res.id};
+    const payload = { token: res.access_token, name: res.name, email, role: res.role, id: res.id};
     setUser(payload);
     setUserLocalStorage(payload);
   }
