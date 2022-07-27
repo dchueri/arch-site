@@ -22,7 +22,7 @@ export const ProtectedLayout = ({ children, role }: ProtectedLayoutProps) => {
   const user = getUserLocalStorage();
   const auth = useAuth();
   const history = useNavigate();
-  if(user.role === 'PROJETISTA' && role === 'ADMIN') {
+  if(user.role === 'PROJETISTA' || role === 'ADMIN') {
     return (
       <Container>
         <div style={{height: 'fit-content', width: '100vw'}}>
