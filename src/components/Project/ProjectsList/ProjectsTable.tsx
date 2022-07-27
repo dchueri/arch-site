@@ -1,5 +1,4 @@
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { Link } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import "moment";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { IUserEntity } from "../../../context/AuthProvider/types";
 import {
   IProjectEntity
@@ -107,9 +107,9 @@ export default function ProjectsTable() {
                   {projects.numberOfInstallments}
                 </StyledTableCell>
                 <StyledTableCell>
-                  <Link href={routesList.editProject + projects.id}>
+                  <NavLink to={routesList.editProject + projects.id}>
                     <ModeEditIcon />
-                  </Link>
+                  </NavLink>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
