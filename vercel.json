@@ -1,7 +1,5 @@
 {
     "rewrites":  [
-      {"source": "/(.*)", "destination": "/"},
-      {"source": "/(.*)/register", "destination": "/"},
-      {"source": "/(.*)/edit", "destination": "/"}
+      {"source": "/[^.]+", "destination": "/"}
     ]
 }
