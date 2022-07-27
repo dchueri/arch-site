@@ -13,6 +13,7 @@ import {
 import Button from "@mui/material/Button";
 import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
 import { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthProvider/useAuth";
 import { getUserLocalStorage } from "../../context/AuthProvider/util";
@@ -33,6 +34,10 @@ export function NavBar() {
   const AppBarS = styled(AppBar)`
     margin-bottom: 2em;
   `;
+
+  const redirectComplete = () => {
+    <NavLink to={routesList.completeReport} />
+  }
 
   function logout() {
     try {
@@ -98,7 +103,12 @@ export function NavBar() {
                     </ButtonS>
                     <Menu {...bindMenu(popupState)}>
                       <Link href={routesList.completeReport}>
-                        <MenuItem onClick={popupState.close}>
+                        <MenuItem
+                          onClick={() => {
+                            popupState.close;
+                            redirectComplete;
+                          }}
+                        >
                           Relatório completo
                         </MenuItem>
                       </Link>
