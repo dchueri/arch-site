@@ -9,9 +9,9 @@
     "projectsList": "/projects",
     "editProject": "/projects/edit",
     "registerProject": "/projects/register",
-    "completeReport": "/report/complete",
-    "userReport": "/report/user",
-    "monthlyReport": "/report/monthly",
+    "completeReport": "/report-complete",
+    "userReport": "/report-user",
+    "monthlyReport": "/report-monthly",
     "myProjects": "/my-projects",
     "myProfile": "/my-profile",
     "myMonthlyReport": "/report/my"
