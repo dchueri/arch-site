@@ -1,5 +1,4 @@
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { Link } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -9,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { IUserEntity } from "../../../context/AuthProvider/types";
 import { getUserLocalStorage } from "../../../context/AuthProvider/util";
 import routesList from "../../../routes/routesList.json";
@@ -40,16 +40,16 @@ export default function UsersTable() {
 
   useEffect(() => {
     let arr: Array<IUserEntity> = [];
-      Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
-        arr = res.data;
-        arr.map(u => u.id == me.id ? arr.splice(arr.indexOf(u), 1) : null)
-        setUsers(arr);
-      });
+    Api.get("https://dcode-arch-app.herokuapp.com/user").then((res) => {
+      arr = res.data;
+      arr.map((u) => (u.id == me.id ? arr.splice(arr.indexOf(u), 1) : null));
+      setUsers(arr);
+    });
   }, []);
 
   return (
     <>
-      <TableContainer sx={{width: '60vw', margin: 'auto'}} component={Paper}>
+      <TableContainer sx={{ width: "60vw", margin: "auto" }} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -68,9 +68,12 @@ export default function UsersTable() {
                 <StyledTableCell>{user.email}</StyledTableCell>
                 <StyledTableCell>{user.role}</StyledTableCell>
                 <StyledTableCell>
-                  <Link href={routesList.editUser + user.id}>
+                  <NavLink
+                    to={routesList.editUser + user.id}
+                    style={{ alignSelf: "center", margin: "2em" }}
+                  >
                     <ModeEditIcon />
-                  </Link>
+                  </NavLink>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

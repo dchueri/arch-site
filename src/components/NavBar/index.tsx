@@ -2,9 +2,7 @@ import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import {
   AppBar,
   Box,
-  IconButton,
-  Link,
-  Menu,
+  IconButton, Menu,
   MenuItem,
   Stack,
   Toolbar,
@@ -13,6 +11,7 @@ import {
 import Button from "@mui/material/Button";
 import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
 import { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthProvider/useAuth";
 import { getUserLocalStorage } from "../../context/AuthProvider/util";
@@ -97,21 +96,21 @@ export function NavBar() {
                       Relatórios
                     </ButtonS>
                     <Menu {...bindMenu(popupState)}>
-                      <Link href={routesList.completeReport}>
+                      <NavLink to={routesList.completeReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório completo
                         </MenuItem>
-                      </Link>
-                      <Link href={routesList.userReport}>
+                      </NavLink>
+                      <NavLink to={routesList.userReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório por projetista
                         </MenuItem>
-                      </Link>
-                      <Link href={routesList.monthlyReport}>
+                      </NavLink>
+                      <NavLink to={routesList.monthlyReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório mensal
                         </MenuItem>
-                      </Link>
+                      </NavLink>
                     </Menu>
                   </Fragment>
                 )}
@@ -194,11 +193,11 @@ export function NavBar() {
                       Relatórios
                     </ButtonS>
                     <Menu {...bindMenu(popupState)}>
-                      <Link href={routesList.myMonthlyReport}>
+                      <NavLink to={routesList.myMonthlyReport}>
                         <MenuItem onClick={popupState.close}>
                           Relatório mensal
                         </MenuItem>
-                      </Link>
+                      </NavLink>
                     </Menu>
                   </Fragment>
                 )}

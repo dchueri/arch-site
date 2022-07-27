@@ -11,8 +11,10 @@ import Typography from "@mui/material/Typography";
 import { message } from "antd";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import routesList from "../../../routes/routesList.json";
 import Validations from "../../../validations/Validations";
 import UserService from "../services";
+
 
 export default function RegisterUser() {
   const theme = createTheme();
@@ -28,7 +30,7 @@ export default function RegisterUser() {
       if (Validations.verifyNameLength(name)) {
         if (Validations.verifyIfIsEmail(email)) {
           if (await Validations.verifyIfEmailExists(email)) {
-            UserService.createUser(name, email, password).then(() => history('/users'));
+            UserService.createUser(name, email, password).then(() => history(routesList.usersList));
           } else {
             return message.error("E-mail já cadastrado.");
           }
