@@ -1,6 +1,6 @@
 
 #
-# Arch
+# ArchApp
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20PRODUÇÃO&color=GREEN&style=for-the-badge) ![Badge issues](https://img.shields.io/github/issues/dchueri/arch-site?style=for-the-badge) ![Badge licensa](https://img.shields.io/github/license/dchueri/arch-site?label=LICENSE&style=for-the-badge) ![Badge Versão](https://img.shields.io/badge/VERSION-1.0.0-blue?style=for-the-badge) 
 
 ## Índice
