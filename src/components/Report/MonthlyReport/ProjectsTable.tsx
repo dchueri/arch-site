@@ -77,6 +77,10 @@ const ProjectsTable = (props: {
     total += monthsWithBonus[props.month];
   };
 
+  const catchName = (id: string) => {
+    return props.userNames[props.userIds.indexOf(id)];
+  };
+
   return (
     <TableContainerS>
       <Table aria-label="customized table">
@@ -101,7 +105,7 @@ const ProjectsTable = (props: {
                       {project.clientName}
                     </StyledTableCell>
                     <StyledTableCell>{project.description}</StyledTableCell>
-                    <StyledTableCell>{project.idOfResponsible}</StyledTableCell>
+                    <StyledTableCell>{catchName(project.idOfResponsible)}</StyledTableCell>
                     <StyledTableCell>
                       {handleDate(project.firstDeliveryDate)}
                     </StyledTableCell>
